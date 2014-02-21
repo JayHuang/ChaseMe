@@ -10,6 +10,7 @@
     <FrameLayout
         android:id="@+id/mapFragment"
         android:layout_width="match_parent"
+        android:visibility="invisible"
         android:layout_height="match_parent" />
 
     <FrameLayout
@@ -30,8 +31,10 @@
         android:id="@+id/editorToolsFragment"
         android:layout_width="wrap_content"
         android:layout_height="80dp"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="180dp"
+        android:layout_marginRight="80dp"
+        android:layout_gravity="center"
         tools:layout="@layout/fragment_mission_control" />
 
     <TextView
@@ -54,7 +57,7 @@
         android:content="@+id/modeInfoPanel"
         android:handle="@+id/slideButtonLeft"
         android:orientation="horizontal"
-        android:visibility="visible"
+        android:visibility="invisible" 
         >
 
         <ImageView
