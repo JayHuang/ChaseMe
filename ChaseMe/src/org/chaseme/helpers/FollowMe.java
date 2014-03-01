@@ -39,6 +39,10 @@ public class FollowMe implements LocationListener {
 			disableFollowMe();
 		}
 	}
+	
+	public Location getLocation() {
+	 return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+	}
 
 	private void enableFollowMe() {
 		Toast.makeText(context, "FollowMe Enabled", Toast.LENGTH_SHORT).show();
@@ -63,10 +67,12 @@ public class FollowMe implements LocationListener {
 
 	@Override
 	public void onLocationChanged(Location location) {
-		LatLng coord = new LatLng(location.getLatitude(), location.getLongitude());
+		
+		drone.followMe(location.getLatitude(), location.getLongitude());
 		// TODO find a better way to do the GUIDED altitude
 		// TODO reimplement follow-me
 		//drone.guidedPoint.newGuidedPointWithCurrentAlt(coord);
+		
 	}
 
 	@Override
@@ -84,7 +90,7 @@ public class FollowMe implements LocationListener {
 	private boolean isEnabledInPreferences() {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-
-		return false;//prefs.getBoolean("pref_follow_me_mode_enabled", false);
+		return true;
+		//return prefs.getBoolean("pref_follow_me_mode_enabled", false);
 	}
 }

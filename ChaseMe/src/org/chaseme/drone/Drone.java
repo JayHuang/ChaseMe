@@ -22,10 +22,16 @@ import org.chaseme.drone.variables.StreamRates;
 import org.chaseme.drone.variables.Type;
 import org.chaseme.drone.variables.mission.Mission;
 import org.chaseme.drone.variables.mission.WaypointMananger;
+import org.chaseme.helpers.FollowMe;
 import org.chaseme.helpers.TTS;
 import org.chaseme.service.MAVLinkClient;
 
+import com.MAVLink.Messages.MAVLinkPacket;
+import com.MAVLink.Messages.ardupilotmega.msg_mission_item;
+import com.MAVLink.Messages.enums.MAV_CMD;
+
 import android.content.Context;
+import android.location.Location;
 
 
 public class Drone {
@@ -51,6 +57,7 @@ public class Drone {
 	public Calibration calibrationSetup = new Calibration(this);
 	public WaypointMananger waypointMananger = new WaypointMananger(this);
 
+	private FollowMe fm;
 	public TTS tts;
 	public MAVLinkClient MavClient;
 	public Context context;
@@ -60,6 +67,8 @@ public class Drone {
 		this.context = context;
 		this.tts = tts;
 		events.addDroneListener(tts);
+		fm = new FollowMe(context, this);
+		
 		
 		profile.load();
 	}
@@ -77,6 +86,64 @@ public class Drone {
 		altitude.setAltitudeError(alt_error);
 		speed.setSpeedError(aspd_error);
 		events.notifyDroneEvent(DroneEventsType.ORIENTATION);
+	}
+	
+	private float alt;
+	private msg_mission_item item;
+		
+		
+	public void takeOff(float altitude){
+		fm.toogleFollowMeState();
+		this.alt = altitude;
+		item = new msg_mission_item();
+		item.autocontinue = 1;
+		item.compid = 1;
+		item.command = MAV_CMD.MAV_CMD_NAV_TAKEOFF;
+		//set minimum pitch
+		item.param1 = 0;
+		//set yaw angle
+		item.param4 = 0;
+		
+		Location location = fm.getLocation();
+		
+		//TODO get GPS latitude with google api
+		item.x      = (float) location.getLatitude();
+		//TODO get GPS longitude with google api
+		item.y		= (float) location.getLongitude();
+		item.z		= altitude;
+		//TODO get GPS latitude with google api
+		item.x      = (float) location.getLatitude();
+		//TODO get GPS longitude with google api
+		item.y		= (float) location.getLongitude();
+		item.z		= altitude;
+		//TODO send packet with above info
+		MavClient.sendMavPacket(item.pack());
+	}
+	
+	public void followMe(double lat, double lon){
+		item.command = MAV_CMD.MAV_CMD_DO_SET_HOME;
+		
+		//use specified location == param1
+		item.param1 = 0;
+		
+		Location location = fm.getLocation();
+		
+		//TODO get GPS latitude with google api
+		item.x      = (float) lat;
+		//TODO get GPS longitude with google api
+		item.y		= (float) lon;
+		item.z		= alt;
+		
+		//TODO send message to mavlink
+		item.command = MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
+		//TODO send message to mavlink
+		MavClient.sendMavPacket(item.pack());
+		//TODO send packet with above info
+	}
+	
+	public void landOrCrashTrying(double lat, double lan){
+		item.command = MAV_CMD.MAV_CMD_NAV_LAND;
+		//TODO bring the drone back to a set distance to the phone and land.
 	}
 
 }
