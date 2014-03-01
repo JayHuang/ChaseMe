@@ -2,7 +2,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
     <ListPreference
-        android:defaultValue="USB"
+        android:defaultValue="TCP"
         android:entries="@array/TelemetryConnectionTypes"
         android:entryValues="@array/TelemetryConnectionTypes"
         android:key="pref_connection_type"
@@ -98,138 +98,6 @@
         </PreferenceCategory>
     </PreferenceScreen>
     <PreferenceScreen
-        android:key="pref_flight_data"
-        android:title="Flight Data">
-        <EditTextPreference
-            android:defaultValue="500"
-            android:inputType="number"
-            android:gravity="center"
-            android:key="pref_max_fligth_path_size"
-            android:summary="Size of the fligth path, set to zero to disable."
-            android:title="Flight path size"/>        
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pref_guided_mode_on_long_press"
-            android:summary="Enable entering the Guided Mode by long pressing the map."
-            android:title="Guided Mode on long press"/>                
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="pref_follow_me_mode_enabled"
-            android:summary="In development"
-            android:title="Enable FollowMe Mode"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="pref_auto_pan_enabled"
-            android:summary="Auto pan the map when a new GPS coordinate is received"
-            android:title="Enable auto pan"/>
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="pref_heading_mode"
-            android:summary="Change heading mode to FPV (-180º to 180º)"
-            android:title="Enable FPV heading mode"/>
-        
-    </PreferenceScreen>
-    <PreferenceScreen
-        android:key="pref_advanced"
-        android:title="Advanced">
-        <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="pref_advanced_use_offline_maps"
-            android:summary="Use map tiles on the local storage, for offline map view"
-            android:title="Use offline maps"/>
-
-        <ListPreference
-            android:defaultValue="Satellite"
-            android:entries="@array/MapTypes"
-            android:entryValues="@array/MapTypes"
-            android:key="pref_map_type"
-            android:summary="Which type of map to use"
-            android:title="Map Type"/>
-
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="pref_enable_tts"
-            android:summary="Audible messages for important events"
-            android:title="Enable Text To Speech"/>
-
-        <ListPreference
-            android:defaultValue="ArduCopter"
-            android:entries="@array/VehicleType"
-            android:entryValues="@array/VehicleType"
-            android:key="pref_vehicle_type"
-            android:summary="Default vehicle type when disconnected"
-            android:title="Default Vehicle Type"/>
-
-        <PreferenceScreen
-            android:key="pref_rc"
-            android:title="RC Screen">
-            <PreferenceCategory
-                android:key="pref_rc_general"
-                android:title="General">
-                <ListPreference
-                    android:defaultValue="MODE2"
-                    android:entries="@array/RCModes"
-                    android:entryValues="@array/RCModeValues"
-                    android:key="pref_rc_mode"
-                    android:summary="Throttle on left or right stick"
-                    android:title="RC Mode"/>
-                <ListPreference
-                    android:defaultValue="Loiter"
-                    android:entries="@array/RCQuickModes"
-                    android:entryValues="@array/RCQuickModes"
-                    android:key="pref_rc_quickmode_left"
-                    android:title="QuickMode Left"/>
-                <ListPreference
-                    android:defaultValue="Stabilize"
-                    android:entries="@array/RCQuickModes"
-                    android:entryValues="@array/RCQuickModes"
-                    android:key="pref_rc_quickmode_right"
-                    android:title="QuickMode Right"/>
-            </PreferenceCategory>
-            <PreferenceCategory
-                android:key="pref_rc_throttle"
-                android:title="Throttle">
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="pref_rc_throttle_reverse"
-                    android:summary="reverses Throttle direction"
-                    android:title="Reverse"/>
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="pref_rc_throttle_returntocenter"
-                    android:summary="on touch release Throttle returns to center"
-                    android:title="Return to Center"/>
-            </PreferenceCategory>
-            <PreferenceCategory
-                android:key="pref_rc_rudder"
-                android:title="Rudder">
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="pref_rc_rudder_reverse"
-                    android:summary="reverses Rudder/Yaw direction"
-                    android:title="Reverse"/>
-            </PreferenceCategory>
-            <PreferenceCategory
-                android:key="pref_rc_aileron"
-                android:title="Aileron">
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="pref_rc_aileron_reverse"
-                    android:summary="reverses Aileron/Roll direction"
-                    android:title="Reverse"/>
-            </PreferenceCategory>
-            <PreferenceCategory
-                android:key="pref_rc_elevator"
-                android:title="Elevator">
-                <CheckBoxPreference
-                    android:defaultValue="false"
-                    android:key="pref_rc_elevator_reverse"
-                    android:summary="reverses Elevator/Pitch direction"
-                    android:title="Reverse"/>
-            </PreferenceCategory>
-        </PreferenceScreen>
-    </PreferenceScreen>
-    <PreferenceScreen
         android:key="pref_connection"
         android:title="Connection Preferences">
         <PreferenceCategory
@@ -247,12 +115,12 @@
             android:key="pref_server"
             android:title="TCP connection">
             <EditTextPreference
-                android:defaultValue="192.168.40.100"
+                android:defaultValue="10.0.0.2"
                 android:key="pref_server_ip"
                 android:gravity="center"
                 android:title="Server IP"/>
             <EditTextPreference
-                android:defaultValue="9761"
+                android:defaultValue="2000"
                 android:inputType="number"
                 android:gravity="center"
                 android:key="pref_server_port"
@@ -278,13 +146,6 @@
             android:selectable="false"
             android:shouldDisableView="false"
             android:title="@string/version"/>
-        <EditTextPreference
-            android:enabled="false"
-            android:key="pref_storage"
-            android:persistent="false"
-            android:selectable="false"
-            android:shouldDisableView="false"
-            android:title="@string/storage_folder"/>
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -60,7 +60,7 @@ public class TelemetryFragment extends Fragment implements OnDroneListener{
 
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(getActivity().getApplicationContext());
-		headingModeFPV = prefs.getBoolean("pref_heading_mode", false);
+		headingModeFPV = false;
 	}
 
 	@Override

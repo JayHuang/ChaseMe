@@ -85,6 +85,6 @@ public class FollowMe implements LocationListener {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
 
-		return prefs.getBoolean("pref_follow_me_mode_enabled", false);
+		return false;//prefs.getBoolean("pref_follow_me_mode_enabled", false);
 	}
 }

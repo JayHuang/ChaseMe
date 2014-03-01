@@ -41,7 +41,7 @@ public class TTS implements OnInitListener, OnDroneListener {
 	}
 
 	private boolean shouldEnableTTS() {
-		return prefs.getBoolean("pref_enable_tts", false);
+		return false; //prefs.getBoolean("pref_enable_tts", false);
 	}
 
 

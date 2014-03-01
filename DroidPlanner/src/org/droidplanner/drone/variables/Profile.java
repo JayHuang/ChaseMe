@@ -69,7 +69,7 @@ public class Profile extends DroneVariable {
 
         // offline or unsupported - return configured vehicleType
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(myDrone.context);
-        return prefs.getString("pref_vehicle_type", null);
+        return "";//prefs.getString("pref_vehicle_type", null);
     }
 
     /*

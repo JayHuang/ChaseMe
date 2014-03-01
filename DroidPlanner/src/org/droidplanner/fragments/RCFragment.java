@@ -52,34 +52,34 @@ public class RCFragment extends Fragment {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(getActivity()
 						.getApplicationContext());
-		rcIsMode1 = prefs.getString("pref_rc_mode", "MODE2").equalsIgnoreCase(
-				"MODE1");
+		// rcIsMode1 = prefs.getString("pref_rc_mode", "MODE2").equalsIgnoreCase(
+		// 		"MODE1");
 		if (rcIsMode1) {
 			joystickL.setAxisAutoReturnToCenter(true, true);
-			joystickR.setAxisAutoReturnToCenter(
-					prefs.getBoolean("pref_rc_throttle_returntocenter", false),
-					true);
-			joystickL.setYAxisInverted(prefs.getBoolean(
-					"pref_rc_elevator_reverse", false));
-			joystickL.setXAxisInverted(prefs.getBoolean(
-					"pref_rc_rudder_reverse", false));
-			joystickR.setYAxisInverted(prefs.getBoolean(
-					"pref_rc_throttle_reverse", false));
-			joystickR.setXAxisInverted(prefs.getBoolean(
-					"pref_rc_aileron_reverse", false));
+			// joystickR.setAxisAutoReturnToCenter(
+			// 		prefs.getBoolean("pref_rc_throttle_returntocenter", false),
+			// 		true);
+			// joystickL.setYAxisInverted(prefs.getBoolean(
+			// 		"pref_rc_elevator_reverse", false));
+			// joystickL.setXAxisInverted(prefs.getBoolean(
+			// 		"pref_rc_rudder_reverse", false));
+			// joystickR.setYAxisInverted(prefs.getBoolean(
+			// 		"pref_rc_throttle_reverse", false));
+			// joystickR.setXAxisInverted(prefs.getBoolean(
+			// 		"pref_rc_aileron_reverse", false));
 		} else { // else Mode2
-			joystickL.setAxisAutoReturnToCenter(
-					prefs.getBoolean("pref_rc_throttle_returntocenter", false),
-					true);
+			// joystickL.setAxisAutoReturnToCenter(
+			// 		prefs.getBoolean("pref_rc_throttle_returntocenter", false),
+			// 		true);
 			joystickR.setAxisAutoReturnToCenter(true, true);
-			joystickL.setYAxisInverted(prefs.getBoolean(
-					"pref_rc_throttle_reverse", false));
-			joystickL.setXAxisInverted(prefs.getBoolean(
-					"pref_rc_rudder_reverse", false));
-			joystickR.setYAxisInverted(prefs.getBoolean(
-					"pref_rc_elevator_reverse", false));
-			joystickR.setXAxisInverted(prefs.getBoolean(
-					"pref_rc_aileron_reverse", false));
+			// joystickL.setYAxisInverted(prefs.getBoolean(
+			// 		"pref_rc_throttle_reverse", false));
+			// joystickL.setXAxisInverted(prefs.getBoolean(
+			// 		"pref_rc_rudder_reverse", false));
+			// joystickR.setYAxisInverted(prefs.getBoolean(
+			// 		"pref_rc_elevator_reverse", false));
+			// joystickR.setXAxisInverted(prefs.getBoolean(
+			// 		"pref_rc_aileron_reverse", false));
 		}
 		super.onResume();
 	}

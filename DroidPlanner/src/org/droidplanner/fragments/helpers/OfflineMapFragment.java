@@ -73,7 +73,7 @@ public class OfflineMapFragment extends SupportMapFragment {
 		Context context = this.getActivity();
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(context);
-		return prefs.getBoolean("pref_advanced_use_offline_maps", false);
+		return false;//prefs.getBoolean("pref_advanced_use_offline_maps", false);
 	}
 
 	private void setupOnlineMapOverlay() {

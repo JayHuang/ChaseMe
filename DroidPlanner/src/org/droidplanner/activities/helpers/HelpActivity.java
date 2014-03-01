@@ -18,20 +18,9 @@ public abstract class HelpActivity extends FragmentActivity implements OnClickLi
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
-            case R.id.menu_help:
-                showHelpDialog();
-                return true;
-
             default:
                 return false;
         }
-	}
-
-	private void showHelpDialog() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(R.string.help);
-		builder.setItems(getHelpItems()[0], this);
-		builder.create().show();
 	}
 
 	/**

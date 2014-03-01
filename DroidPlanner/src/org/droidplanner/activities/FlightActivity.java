@@ -51,7 +51,7 @@ public class FlightActivity extends SuperUI implements
 		setContentView(R.layout.activity_flight);
 
 		fragmentManager = getSupportFragmentManager();
-		modeInfoPanel = fragmentManager.findFragmentById(R.id.modeInfoPanel);
+		// modeInfoPanel = fragmentManager.findFragmentById(R.id.modeInfoPanel);
 		failsafeTextView = findViewById(R.id.failsafeTextView);
 
         //Load the activity fragments
