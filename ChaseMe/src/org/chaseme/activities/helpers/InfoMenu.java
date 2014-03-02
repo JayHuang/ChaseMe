@@ -50,19 +50,6 @@ public class InfoMenu implements OnDroneListener {
 	}
 
 	private void findViews(Menu menu) {
-		battery = menu.findItem(R.id.bar_battery);
-		gps = menu.findItem(R.id.bar_gps);
-		propeler = menu.findItem(R.id.bar_propeller);
-		home = menu.findItem(R.id.bar_home);
-		signal = menu.findItem(R.id.bar_signal);
-		signalRSSI = menu.findItem(R.id.bar_signal_rssi);
-		signalRemRSSI = menu.findItem(R.id.bar_signal_rssirem);
-		signalNoise = menu.findItem(R.id.bar_signal_noise);
-		signalRemNoise = menu.findItem(R.id.bar_signal_noiserem);
-		signalFade = menu.findItem(R.id.bar_signal_fade);
-		signalRemFade = menu.findItem(R.id.bar_signal_faderem);
-		mode = (SelectModeSpinner) menu.findItem(R.id.bar_mode).getActionView();
-		timer = new TimerView(propeler, drone);
 	}
 
 	public void forceViewsUpdate() {
@@ -102,64 +89,18 @@ public class InfoMenu implements OnDroneListener {
 	}
 
 	private void updateBatteryInfo(Drone drone) {
-		SpannableString text = new SpannableString(String.format("   Battery\n  %2.1fv, %2.0f%% ",drone.battery.getBattVolt(), drone.battery.getBattRemain()));
-		text.setSpan(new RelativeSizeSpan(.8f), 0, 10, 0);
-		text.setSpan(new AlignmentSpan.Standard(Alignment.ALIGN_NORMAL),0, text.length()-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		battery.setTitle(text);
 	}
 
 	private void updateGpsInfo(Drone drone) {
-		SpannableString text = new SpannableString(String.format("   Satellite\n  %d, %s", drone.GPS.getSatCount(), drone.GPS.getFixType()));
-		text.setSpan(new RelativeSizeSpan(.8f), 0, 13, 0);
-		text.setSpan(new AlignmentSpan.Standard(Alignment.ALIGN_NORMAL),0, text.length()-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		gps.setTitle(text);
 	}
 
 	private void updateRadioInfo(Drone drone) {
-		SpannableString text = new SpannableString(String.format("   Signal\n  %d%%", drone.radio.getSignalStrength()));
-		text.setSpan(new RelativeSizeSpan(.8f), 0, 9, 0);
-		text.setSpan(new AlignmentSpan.Standard(Alignment.ALIGN_NORMAL),0, text.length()-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		signal.setTitle(text);
-
-		signalRSSI.setTitle(String.format("RSSI %2.0f dB",
-				drone.radio.getRssi()));
-		signalRemRSSI.setTitle(String.format("RemRSSI %2.0f dB",
-				drone.radio.getRemRssi()));
-		signalNoise.setTitle(String.format("Noise %2.0f dB",
-				drone.radio.getNoise()));
-		signalRemNoise.setTitle(String.format("RemNoise %2.0f dB",
-				drone.radio.getRemNoise()));
-		signalFade.setTitle(String.format("Fade %2.0f dB",
-				drone.radio.getFadeMargin()));
-		signalRemFade.setTitle(String.format("RemFade %2.0f dB",
-				drone.radio.getRemFadeMargin()));
 	}
 
 	public void updateHomeInfo(Drone drone) {
-		SpannableString text = new SpannableString(String.format("   Home\n  %s", drone.home.getDroneDistanceToHome().toString()));
-		text.setSpan(new RelativeSizeSpan(.8f), 0, 7, 0);
-		text.setSpan(new AlignmentSpan.Standard(Alignment.ALIGN_NORMAL),0, text.length()-1, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-		home.setTitle(text);
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.bar_timer_reset:
-			drone.state.resetFlightTimer();
-			return true;
-
-		case R.id.bar_home:
-			return true;
-
-		case R.id.menu_send_mission:
-			drone.mission.sendMissionToAPM();
-			return true;
-
-		case R.id.menu_load_mission:
-			drone.waypointMananger.getWaypoints();
-			return true;
-		}
-
         return false;
 	}
 
