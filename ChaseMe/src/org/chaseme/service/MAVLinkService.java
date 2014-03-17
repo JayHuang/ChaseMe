@@ -211,7 +211,7 @@ public class MAVLinkService extends Service implements MavLinkConnectionListener
 
 	private void updateNotification(String text) {
 		NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
-				this).setSmallIcon(R.drawable.ic_launcher)
+				this).setSmallIcon(R.drawable.ic_follow_active)
 				.setContentTitle(getResources().getString(R.string.app_title))
 				.setContentText(text);
 		PendingIntent contentIntent = PendingIntent.getActivity(this, 0,

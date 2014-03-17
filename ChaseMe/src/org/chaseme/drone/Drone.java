@@ -90,6 +90,7 @@ public class Drone {
 	
 	private float alt;
 	private msg_mission_item item;
+	private msg_mission_item itemReturn;
 		
 		
 	public void takeOff(float altitude){
@@ -121,13 +122,12 @@ public class Drone {
 	}
 	
 	public void followMe(double lat, double lon){
+
 		item.command = MAV_CMD.MAV_CMD_DO_SET_HOME;
 		
 		//use specified location == param1
 		item.param1 = 0;
-		
-		Location location = fm.getLocation();
-		
+				
 		//TODO get GPS latitude with google api
 		item.x      = (float) lat;
 		//TODO get GPS longitude with google api
@@ -135,15 +135,21 @@ public class Drone {
 		item.z		= alt;
 		
 		//TODO send message to mavlink
-		item.command = MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
-		//TODO send message to mavlink
 		MavClient.sendMavPacket(item.pack());
+		//TODO send message to mavlink
+		itemReturn.command = MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
 		//TODO send packet with above info
+		MavClient.sendMavPacket(itemReturn.pack());
 	}
 	
-	public void landOrCrashTrying(double lat, double lan){
+	public void landOrCrashTrying(double lat, double lon){
 		item.command = MAV_CMD.MAV_CMD_NAV_LAND;
 		//TODO bring the drone back to a set distance to the phone and land.
+		item.param4 = 0;
+		item.x = (float) lat;
+		item.y = (float) lon;
+		item.z = 0;
+		MavClient.sendMavPacket(item.pack());
 	}
 
 }

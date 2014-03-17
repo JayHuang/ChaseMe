@@ -68,7 +68,9 @@ public class FollowMe implements LocationListener {
 	@Override
 	public void onLocationChanged(Location location) {
 		
-		drone.followMe(location.getLatitude(), location.getLongitude());
+		while(followMeEnabled){
+			drone.followMe(location.getLatitude(), location.getLongitude());
+		}
 		// TODO find a better way to do the GUIDED altitude
 		// TODO reimplement follow-me
 		//drone.guidedPoint.newGuidedPointWithCurrentAlt(coord);
