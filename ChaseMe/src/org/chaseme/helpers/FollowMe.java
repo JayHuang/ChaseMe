@@ -43,12 +43,12 @@ public class FollowMe implements LocationListener {
 	public Location getLocation() {
 	 return locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 	}
-
+	
+	
 	private void enableFollowMe() {
 		Toast.makeText(context, "FollowMe Enabled", Toast.LENGTH_SHORT).show();
 
-		// Register the listener with the Location Manager to receive location
-		// updates
+		
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 				MIN_TIME_MS, MIN_DISTANCE_M, this);
 
@@ -71,9 +71,6 @@ public class FollowMe implements LocationListener {
 		while(followMeEnabled){
 			drone.followMe(location.getLatitude(), location.getLongitude());
 		}
-		// TODO find a better way to do the GUIDED altitude
-		// TODO reimplement follow-me
-		//drone.guidedPoint.newGuidedPointWithCurrentAlt(coord);
 		
 	}
 

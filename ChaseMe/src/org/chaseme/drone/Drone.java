@@ -92,7 +92,10 @@ public class Drone {
 	private msg_mission_item item;
 	private msg_mission_item itemReturn;
 		
-		
+	/**
+	 * This method sends a takeoff command in Mavlink that flies the drone up to the specified altitude.
+	 * @param altitude 
+	 */
 	public void takeOff(float altitude){
 		fm.toogleFollowMeState();
 		this.alt = altitude;
@@ -120,31 +123,32 @@ public class Drone {
 		//TODO send packet with above info
 		MavClient.sendMavPacket(item.pack());
 	}
-	
+	/**
+	 * Set the phone's gps location to home and have the drone return to launch (home).
+	 * @param lat The latitude of the phone's location
+	 * @param lon The longitude of the phone's location
+	 */
 	public void followMe(double lat, double lon){
 
 		item.command = MAV_CMD.MAV_CMD_DO_SET_HOME;
 		
 		//use specified location == param1
 		item.param1 = 0;
-				
-		//TODO get GPS latitude with google api
 		item.x      = (float) lat;
-		//TODO get GPS longitude with google api
 		item.y		= (float) lon;
 		item.z		= alt;
 		
-		//TODO send message to mavlink
 		MavClient.sendMavPacket(item.pack());
-		//TODO send message to mavlink
 		itemReturn.command = MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
-		//TODO send packet with above info
 		MavClient.sendMavPacket(itemReturn.pack());
 	}
-	
+	/**
+	 * Send a mavlink command that tells the drone to land at the phone's gps location.
+	 * @param lat The latitude of the phone's location
+	 * @param lon The longitude of the phone's location
+	 */
 	public void landOrCrashTrying(double lat, double lon){
 		item.command = MAV_CMD.MAV_CMD_NAV_LAND;
-		//TODO bring the drone back to a set distance to the phone and land.
 		item.param4 = 0;
 		item.x = (float) lat;
 		item.y = (float) lon;
