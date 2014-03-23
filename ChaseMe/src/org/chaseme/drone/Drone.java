@@ -101,11 +101,13 @@ public class Drone {
 	 * @param altitude 
 	 */
 	public void takeOff(float altitude){
+		
 		fm.toogleFollowMeState();
 		this.alt = altitude;
 		item = new msg_mission_item();
 		item.autocontinue = 1;
 		item.compid = 1;
+		//Set the mavlink command to takeoff.
 		item.command = MAV_CMD.MAV_CMD_NAV_TAKEOFF;
 		//set minimum pitch
 		item.param1 = 0;
@@ -117,7 +119,8 @@ public class Drone {
 		item.x      = (float) location.getLatitude();
 		item.y		= (float) location.getLongitude();
 		item.z		= altitude;
-		MavClient.sendMavPacket(item.pack());
+		//Send the mavlink command to the drone.
+		MavClient.sendMavPacket(item.pack());	
 	}
 	/**
 	 * Set the phone's gps location to home and have the drone return to launch (home).
@@ -125,7 +128,7 @@ public class Drone {
 	 * @param lon The longitude of the phone's location
 	 */
 	public void followMe(double lat, double lon){
-
+		//Set the mavlink command to set home destination.
 		item.command = MAV_CMD.MAV_CMD_DO_SET_HOME;
 		
 		//use specified location == param1
@@ -133,9 +136,12 @@ public class Drone {
 		item.x      = (float) lat;
 		item.y		= (float) lon;
 		item.z		= alt;
-		
+		//Send the mavlink command to the drone.
 		MavClient.sendMavPacket(item.pack());
+		
+		//Set the mavlink comand to return to launch(home).
 		itemReturn.command = MAV_CMD.MAV_CMD_NAV_RETURN_TO_LAUNCH;
+		//Send the mavlink command to the drone.
 		MavClient.sendMavPacket(itemReturn.pack());
 	}
 	/**
@@ -144,11 +150,13 @@ public class Drone {
 	 * @param lon The longitude of the phone's location
 	 */
 	public void landOrCrashTrying(double lat, double lon){
+		//Set the mavlink command to land.
 		item.command = MAV_CMD.MAV_CMD_NAV_LAND;
 		item.param4 = 0;
 		item.x = (float) lat;
 		item.y = (float) lon;
 		item.z = 0;
+		//Send the mavlink command to land.
 		MavClient.sendMavPacket(item.pack());
 	}
 

@@ -22,6 +22,9 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.CameraPosition.Builder;
 import com.google.android.gms.maps.model.LatLng;
 
+/**
+ * Map of the drone's path during its flight.
+ */
 public abstract class DroneMap extends OfflineMapFragment implements OnDroneListener {
 	public GoogleMap mMap;
 	protected MarkerManager markers;
@@ -32,6 +35,9 @@ public abstract class DroneMap extends OfflineMapFragment implements OnDroneList
 	
 	protected abstract boolean isMissionDraggable();
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.OfflineMapFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
 			Bundle bundle) {
@@ -44,6 +50,9 @@ public abstract class DroneMap extends OfflineMapFragment implements OnDroneList
 		return view;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onStart()
+	 */
 	@Override
 	public void onStart() {
 		super.onStart();
@@ -52,6 +61,9 @@ public abstract class DroneMap extends OfflineMapFragment implements OnDroneList
 		update();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onStop()
+	 */
 	@Override
 	public void onStop() {
 		super.onStop();
@@ -59,6 +71,9 @@ public abstract class DroneMap extends OfflineMapFragment implements OnDroneList
 		saveCameraPosition();
 	}
 
+	/* (non-Javadoc)
+	 * @see com.google.android.gms.maps.SupportMapFragment#onAttach(android.app.Activity)
+	 */
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -81,6 +96,9 @@ public abstract class DroneMap extends OfflineMapFragment implements OnDroneList
 		editor.commit();
 	}
 
+	/**
+	 * Load the Camera Position
+	 */
 	private void loadCameraPosition() {
 		Builder camera = new CameraPosition.Builder();
 		SharedPreferences settings = context.getSharedPreferences("MAP", 0);
@@ -91,6 +109,9 @@ public abstract class DroneMap extends OfflineMapFragment implements OnDroneList
 		mMap.moveCamera(CameraUpdateFactory.newCameraPosition(camera.build()));
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.drone.DroneInterfaces.OnDroneListener#onDroneEvent(org.chaseme.drone.DroneInterfaces.DroneEventsType, org.chaseme.drone.Drone)
+	 */
 	@Override
 	public void onDroneEvent(DroneEventsType event, Drone drone) {
 		switch (event) {
@@ -102,6 +123,10 @@ public abstract class DroneMap extends OfflineMapFragment implements OnDroneList
 		}
 	}
 
+	/**
+	 * Gets the current location
+	 * @return LatLng object 
+	 */
 	public LatLng getMyLocation() {
 		if (mMap.getMyLocation() != null) {
 			return new LatLng(mMap.getMyLocation().getLatitude(), mMap
@@ -111,6 +136,9 @@ public abstract class DroneMap extends OfflineMapFragment implements OnDroneList
 		}
 	}
 
+	/**
+	 * Update the Marker, Home, and mission path.
+	 */
 	public void update() {
 		markers.clean();
 

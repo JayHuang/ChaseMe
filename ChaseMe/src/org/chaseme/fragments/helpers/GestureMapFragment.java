@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 
 import org.chaseme.R;
 
+/**
+ * Fragment of Gesture Map.
+ */
 public class GestureMapFragment extends Fragment implements OnGestureListener {
 	private static final int TOLERANCE = 15;
 	private static final int STROKE_WIDTH = 3;
@@ -31,6 +34,9 @@ public class GestureMapFragment extends Fragment implements OnGestureListener {
 	private GestureOverlayView overlay;
 	private OnPathFinishedListener listener;
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -45,23 +51,41 @@ public class GestureMapFragment extends Fragment implements OnGestureListener {
 		return view;
 	}
 
+	/**
+	 * Scale the Gesture Map to value
+	 * @param value Value wanted to scale with.
+	 * @return number of pixels for the map to be displayed in.
+	 */
 	private int scaleDpToPixels(double value) {
 		final float scale = getResources().getDisplayMetrics().density;
 		return (int) Math.round(value*scale);
 	}
 
+	/**
+	 * Enable the gesture detection in overlay.
+	 */
 	public void enableGestureDetection() {
 		overlay.setEnabled(true);
 	}
 
+	/**
+	 * Disable the gesture detection in overlay.
+	 */
 	public void disableGestureDetection() {
 		overlay.setEnabled(false);
 	}
 
+	/**
+	 * Sets the OnPathFinishedListener.
+	 * @param listener 
+	 */
 	public void setOnPathFinishedListener(OnPathFinishedListener listener) {
 		this.listener = listener;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.gesture.GestureOverlayView.OnGestureListener#onGestureEnded(android.gesture.GestureOverlayView, android.view.MotionEvent)
+	 */
 	@Override
 	public void onGestureEnded(GestureOverlayView arg0, MotionEvent arg1) {
 		overlay.setEnabled(false);
@@ -72,12 +96,20 @@ public class GestureMapFragment extends Fragment implements OnGestureListener {
 		listener.onPathFinished(path);
 	}
 
+	/**
+	 * Decode the Gesture
+	 * @return path The list of path points.
+	 */
 	private List<Point> decodeGesture() {
 		List<Point> path = new ArrayList<Point>();
 		extractPathFromGesture(path);
 		return path;
 	}
 
+	/**
+	 * Extract the path from Gesture
+	 * @param path List of points to extract for the Gesture
+	 */
 	private void extractPathFromGesture(List<Point> path) {
 		float[] points = overlay.getGesture().getStrokes().get(0).points;
 		for (int i = 0; i < points.length; i += 2) {
@@ -85,14 +117,23 @@ public class GestureMapFragment extends Fragment implements OnGestureListener {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see android.gesture.GestureOverlayView.OnGestureListener#onGesture(android.gesture.GestureOverlayView, android.view.MotionEvent)
+	 */
 	@Override
 	public void onGesture(GestureOverlayView arg0, MotionEvent arg1) {
 	}
 
+	/* (non-Javadoc)
+	 * @see android.gesture.GestureOverlayView.OnGestureListener#onGestureCancelled(android.gesture.GestureOverlayView, android.view.MotionEvent)
+	 */
 	@Override
 	public void onGestureCancelled(GestureOverlayView arg0, MotionEvent arg1) {
 	}
 
+	/* (non-Javadoc)
+	 * @see android.gesture.GestureOverlayView.OnGestureListener#onGestureStarted(android.gesture.GestureOverlayView, android.view.MotionEvent)
+	 */
 	@Override
 	public void onGestureStarted(GestureOverlayView arg0, MotionEvent arg1) {
 	}
