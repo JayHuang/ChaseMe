@@ -42,6 +42,9 @@ public abstract class SuperSetupFragment extends Fragment implements OnDroneList
 	public abstract SetupMainPanel getMainPanel(int index);
 	public abstract SetupMainPanel initMainPanel();
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onAttach(android.app.Activity)
+	 */
 	@Override
 	public void onAttach(Activity activity) {
 		super.onAttach(activity);
@@ -53,12 +56,18 @@ public abstract class SuperSetupFragment extends Fragment implements OnDroneList
         parentActivity = (ConfigurationActivity)activity;
 	}
 
+    /* (non-Javadoc)
+     * @see android.support.v4.app.Fragment#onDetach()
+     */
     @Override
     public void onDetach(){
         super.onDetach();
         parentActivity = null;
     }
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -92,45 +101,71 @@ public abstract class SuperSetupFragment extends Fragment implements OnDroneList
 		return view;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onActivityCreated(android.os.Bundle)
+	 */
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 		this.drone = ((ChaseMeApp) getActivity().getApplication()).drone;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onStart()
+	 */
 	@Override
 	public void onStart() {
 		drone.events.addDroneListener(this);
 		super.onStart();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.Fragment#onStop()
+	 */
 	@Override
 	public void onStop() {
 		drone.events.removeDroneListener(this);
 		super.onStop();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.widget.AdapterView.OnItemSelectedListener#onItemSelected(android.widget.AdapterView, android.view.View, int, long)
+	 */
 	@Override
 	public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 		changeMainPanel(arg2);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.widget.AdapterView.OnItemSelectedListener#onNothingSelected(android.widget.AdapterView)
+	 */
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.drone.DroneInterfaces.OnDroneListener#onDroneEvent(org.chaseme.drone.DroneInterfaces.DroneEventsType, org.chaseme.drone.Drone)
+	 */
 	@Override
 	public void onDroneEvent(DroneEventsType event, Drone drone) {
 		// TODO Auto-generated method stub
 
 	}
 
+	/**
+	 * Update the Title
+	 * @param id Id for the Title.
+	 */
 	public void updateTitle(int id){
 		textViewTitle.setText(id);
 	}
 
+	/**
+	 * Set up Local views
+	 * @param view View variable.
+	 */
 	private void setupLocalViews(View view) {
 		textViewTitle = (TextView)view.findViewById(R.id.textViewSetupTitle);
 		spinnerSetup = (Spinner)view.findViewById(R.id.spinnerSetupType);
@@ -143,6 +178,11 @@ public abstract class SuperSetupFragment extends Fragment implements OnDroneList
 			spinnerSetup.setAdapter(adapter);
 	}
 
+	/**
+	 * Set up main panel
+	 * @param step int variable.
+	 * @return setupPanel
+	 */
 	public SetupMainPanel changeMainPanel(int step) {
 		setupPanel = getMainPanel(step);
 		sidePanel = setupPanel.getSidePanel();
@@ -160,6 +200,11 @@ public abstract class SuperSetupFragment extends Fragment implements OnDroneList
 		return setupPanel;
 	}
 
+	/**
+	 * Setup side panel
+	 * @param sPanel SetupSidePanel variable.
+	 * @return The side panel.
+	 */
 	public SetupSidePanel changeSidePanel(SetupSidePanel sPanel) {
 		sidePanel = sPanel;
 
@@ -176,12 +221,20 @@ public abstract class SuperSetupFragment extends Fragment implements OnDroneList
 		return sidePanel;
 	}
 
+    /**
+     * Calibrate Step
+     * @param step int variable.
+     */
     public void doCalibrationStep(int step){
         if(setupPanel != null){
             setupPanel.doCalibrationStep(step);
         }
     }
 
+    /**
+     * Update the side panel title.
+     * @param calibrationStep int variable calibration step.
+     */
     public void updateSidePanelTitle(int calibrationStep){
         if(sidePanel != null){
             sidePanel.updateDescription(calibrationStep);

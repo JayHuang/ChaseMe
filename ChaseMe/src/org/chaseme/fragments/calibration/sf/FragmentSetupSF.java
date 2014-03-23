@@ -11,17 +11,29 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+/**
+ * Fragment set up for spinner fragment
+ */
+/**
+ * @author Enoch
+ *
+ */
 public class FragmentSetupSF extends SuperSetupMainPanel{
 	int[] valueSF;
 	private String[] stringSF;
 	Spinner[] spinnerSFs = new Spinner[6];
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.calibration.SetupMainPanel#getPanelLayout()
+	 */
 	@Override
 	public int getPanelLayout() {
 		return R.layout.fragment_setup_sf_main;
 	}
 
-
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.SuperSetupMainPanel#getDefaultPanel()
+	 */
 	@Override
 	protected SetupSidePanel getDefaultPanel() {
 		sidePanel = new FragmentSetupSend();
@@ -30,16 +42,25 @@ public class FragmentSetupSF extends SuperSetupMainPanel{
 		return sidePanel;
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.calibration.SetupMainPanel#getSidePanel()
+	 */
 	@Override
 	public SetupSidePanel getSidePanel() {
 		return getDefaultPanel();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.SuperSetupMainPanel#getParameterHandler()
+	 */
 	@Override
 	protected CalParameters getParameterHandler() {		
 		return new SF_CalParameters(drone);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.SuperSetupMainPanel#updateCalibrationData()
+	 */
 	@Override
 	protected void updateCalibrationData() {
 		for (int i = 0; i < 6; i++) {
@@ -48,6 +69,9 @@ public class FragmentSetupSF extends SuperSetupMainPanel{
 		}
 	}
 	
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.SuperSetupMainPanel#updatePanelInfo()
+	 */
 	@Override
 	protected void updatePanelInfo() {
 		if (parameters == null)
@@ -59,7 +83,10 @@ public class FragmentSetupSF extends SuperSetupMainPanel{
 							valueSF), true);
 		}
 	}
-
+	
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.calibration.SetupMainPanel#setupLocalViews(android.view.View)
+	 */
 	@Override
 	public void setupLocalViews(View v) {
 		spinnerSFs[0] = (Spinner) v.findViewById(R.id.spinnerSF5);
@@ -72,6 +99,9 @@ public class FragmentSetupSF extends SuperSetupMainPanel{
 		setupSpinners();
 	}
 
+	/**
+	 * Setup sprinners
+	 */
 	private void setupSpinners() {
 		getSFOptions();
 
@@ -82,7 +112,10 @@ public class FragmentSetupSF extends SuperSetupMainPanel{
 		for(Spinner spinner: spinnerSFs)
 			spinner.setAdapter(adapter);
 	}
-
+	
+	/**
+	 * get spinner fragment options
+	 */
 	private void getSFOptions() {
 		String pairs[] = getResources().getStringArray(R.array.Servo_Functions);
 		valueSF = null;

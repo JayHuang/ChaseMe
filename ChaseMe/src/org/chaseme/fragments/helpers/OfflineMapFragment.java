@@ -21,6 +21,9 @@ import java.util.List;
 
 import org.chaseme.helpers.LocalMapTileProvider;
 
+/**
+ * Class for OfflineMapFragment
+ */
 public class OfflineMapFragment extends SupportMapFragment {
 
 	public static final String PREF_MAP_TYPE = "pref_map_type";
@@ -32,6 +35,9 @@ public class OfflineMapFragment extends SupportMapFragment {
 
 	private GoogleMap mMap;
 
+	/* (non-Javadoc)
+	 * @see com.google.android.gms.maps.SupportMapFragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup viewGroup,
 			Bundle bundle) {
@@ -43,6 +49,9 @@ public class OfflineMapFragment extends SupportMapFragment {
 		return view;
 	}
 
+	/**
+	 * Setup the offline map.
+	 */
 	private void setupMap() {
 		mMap = getMap();
 		if (isMapLayoutFinished()) { // TODO it should wait for the map layout
@@ -53,6 +62,9 @@ public class OfflineMapFragment extends SupportMapFragment {
 		}
 	}
 
+	/**
+	 * Set up the Map User Interface
+	 */
 	private void setupMapUI() {
 		mMap.setMyLocationEnabled(true);
 		UiSettings mUiSettings = mMap.getUiSettings();
@@ -61,6 +73,9 @@ public class OfflineMapFragment extends SupportMapFragment {
 		mUiSettings.setTiltGesturesEnabled(false);
 	}
 
+	/**
+	 * Setup Map Overlay
+	 */
 	private void setupMapOverlay() {
 		if (isOfflineMapEnabled()) {
 			setupOfflineMapOverlay();
@@ -69,6 +84,10 @@ public class OfflineMapFragment extends SupportMapFragment {
 		}
 	}
 
+	/**
+	 * Check whether the offline map is enabled or not.
+	 * @return whether the offline map is enabled or not.
+	 */
 	private boolean isOfflineMapEnabled() {
 		Context context = this.getActivity();
 		SharedPreferences prefs = PreferenceManager
@@ -76,10 +95,17 @@ public class OfflineMapFragment extends SupportMapFragment {
 		return false;//prefs.getBoolean("pref_advanced_use_offline_maps", false);
 	}
 
+	/**
+	 * Set up online map overlay
+	 */
 	private void setupOnlineMapOverlay() {
 		mMap.setMapType(getMapType());
 	}
 
+	/**
+	 * Get Map Type
+	 * @return Map Type
+	 */
 	private int getMapType() {
 		SharedPreferences prefs = PreferenceManager
 				.getDefaultSharedPreferences(getActivity());
@@ -101,6 +127,9 @@ public class OfflineMapFragment extends SupportMapFragment {
 		}
 	}
 
+	/**
+	 * Setup offline Map Overlay
+	 */
 	private void setupOfflineMapOverlay() {
 		mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
 		TileOverlay tileOverlay = mMap.addTileOverlay(new TileOverlayOptions()
@@ -109,6 +138,10 @@ public class OfflineMapFragment extends SupportMapFragment {
 		tileOverlay.clearTileCache();
 	}
 
+	/**
+	 * Zoom to Extents of the Map
+	 * @param pointsList List<LatLng> variable.
+	 */
 	public void zoomToExtents(List<LatLng> pointsList) {
 		if (!pointsList.isEmpty()) {
 			LatLngBounds bounds = getBounds(pointsList);
@@ -122,12 +155,20 @@ public class OfflineMapFragment extends SupportMapFragment {
 		}
 	}
 
+	/**
+	 * Clear the map.
+	 */
 	protected void clearMap() {
 		GoogleMap mMap = getMap();
 		mMap.clear();
 		setupMapOverlay();
 	}
 
+	/**
+	 * Get the bounds of latitude and longitude.
+	 * @param pointsList List<LatLng> variable.
+	 * @return The bounds of the latitude and longitude.
+	 */
 	private LatLngBounds getBounds(List<LatLng> pointsList) {
 		LatLngBounds.Builder builder = new LatLngBounds.Builder();
 		for (LatLng point : pointsList) {
@@ -136,6 +177,10 @@ public class OfflineMapFragment extends SupportMapFragment {
 		return builder.build();
 	}
 
+	/**
+	 * Get rotation degree of the map.
+	 * @return rotation degree of the map.
+	 */
 	public double getMapRotation() {
 		if (isMapLayoutFinished()) {
 			return mMap.getCameraPosition().bearing;
@@ -144,6 +189,10 @@ public class OfflineMapFragment extends SupportMapFragment {
 		}
 	}
 
+	/**
+	 * Check if map layout is finished or not.
+	 * @return If map layout is finished or not.
+	 */
 	private boolean isMapLayoutFinished() {
 		return getMap() != null;
 	}

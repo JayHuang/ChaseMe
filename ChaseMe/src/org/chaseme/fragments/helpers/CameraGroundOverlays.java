@@ -13,14 +13,26 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
 
+/**
+ * Takes care of the overlays over the GoogleMap map.
+ */
 public class CameraGroundOverlays {
 	public ArrayList<Polygon> cameraOverlays = new ArrayList<com.google.android.gms.maps.model.Polygon>();
 	private GoogleMap mMap;
 
+	/**
+	 * Constructor that takes in GoogleMap as a param
+	 * @param mMap GoogleMap variable.
+	 */
 	public CameraGroundOverlays(GoogleMap mMap) {
 		this.mMap = mMap;
 	}
 
+	/**
+	 * Adds the overlays over the map.
+	 * @param cameraLocations Camera locations.
+	 * @param surveyData Data of the survey.
+	 */
 	public void addOverlays(List<LatLng> cameraLocations,
 			SurveyData surveyData) {
 		for (LatLng latLng : cameraLocations) {
@@ -29,6 +41,9 @@ public class CameraGroundOverlays {
 	}
 
 
+	/**
+	 * Removes all the overlays
+	 */
 	public void removeAll() {
 		for (com.google.android.gms.maps.model.Polygon overlay : cameraOverlays) {
 			overlay.remove();
@@ -36,6 +51,11 @@ public class CameraGroundOverlays {
 		cameraOverlays.clear();
 	}
 
+	/**
+	 * Adds a Footprint
+	 * @param latLng Latitude and longitude variable.
+	 * @param surveyData Data of survey.
+	 */
 	private void addOneFootprint(LatLng latLng, SurveyData surveyData) {
 		double lng = surveyData.getLateralFootPrint().valueInMeters();
 		double lateral = surveyData.getLongitudinalFootPrint().valueInMeters();
@@ -46,6 +66,13 @@ public class CameraGroundOverlays {
 		
 	}
 
+	/**
+	 * Adds Rectangle overlay over the map.
+	 * @param center Latitude and longitude variable.
+	 * @param halfDiagonal Half of the diagonal length of the overlay.
+	 * @param centerAngle Angle in relation to the center of the overlay.
+	 * @param orientation Orientation of the overlay.
+	 */
 	private void addRectangleOverlay(LatLng center, double halfDiagonal,
 			double centerAngle, Double orientation) {
 		cameraOverlays.add(mMap.addPolygon(new PolygonOptions()
