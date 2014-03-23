@@ -76,7 +76,7 @@ public class BluetoothConnection extends MAVLinkConnection {
                 // ListView
                 Log.d(BLUE, device.getName() + " #" + device.getAddress() + "#");
                 for (ParcelUuid id : device.getUuids()) {
-                    // TODO maybe this will not work on newer devices
+                    // this may not work on newer devices
                     Log.d(BLUE, "id:" + id.toString());
                     if (id.toString().equalsIgnoreCase(UUID_SPP_DEVICE)) {
                         Log.d(BLUE, ">> Selected: " + device.getName()
@@ -130,7 +130,6 @@ public class BluetoothConnection extends MAVLinkConnection {
 
 	@Override
 	protected void getPreferences(SharedPreferences prefs) {
-		// TODO Auto-generated method stub
 	}
 
 	/*

@@ -15,8 +15,7 @@ import com.google.android.gms.maps.model.LatLng;
 public abstract class Loiter extends SpatialCoordItem implements MarkerSource {
 	@Override
 	public MissionDetailFragment getDetailFragment() {
-		// TODO Auto-generated method stub
-		return null;
+				return null;
 	}
 
 	private double orbitalRadius;

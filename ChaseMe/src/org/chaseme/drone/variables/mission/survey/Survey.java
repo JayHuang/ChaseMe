@@ -114,8 +114,6 @@ public class Survey extends MissionItem {
 
 	@Override
 	public void unpackMAVMessage(msg_mission_item mavMsg) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -3,6 +3,8 @@ package org.chaseme.service;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.chaseme.drone.Drone;
+
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Context;
@@ -15,7 +17,9 @@ import android.os.Message;
 import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.MAVLink.Messages.ApmModes;
 import com.MAVLink.Messages.MAVLinkMessage;
 import com.MAVLink.Messages.MAVLinkPacket;
 
@@ -26,6 +30,7 @@ public class MAVLinkClient {
 	public static final int MSG_TIMEOUT = 2;
 
 	Context parent;
+	private Drone drone;
 	private OnMavlinkClientListener listener;
 	Messenger mService = null;
 	final Messenger mMessenger = new Messenger(new IncomingHandler());
@@ -45,17 +50,28 @@ public class MAVLinkClient {
 		void notifyTimeOut(int timeOutCount);
 	}
 
+	/**
+	 * Setup the parent and listeners
+	 * @param context
+	 * @param listener
+	 */
 	public MAVLinkClient(Context context, OnMavlinkClientListener listener) {
 		parent = context;
 		this.listener = listener;
 	}
 
+	/**
+	 * Initialize and bind the mavlink connection
+	 */
 	public void init() {
 		parent.bindService(new Intent(parent, MAVLinkService.class),
 				mConnection, Context.BIND_AUTO_CREATE);
 		mIsBound = true;
 	}
 
+	/**
+	 * Close connection and unbind the service
+	 */
 	public void close() {
 		if (isConnected()) {
 			// If we have received the service, and hence registered with
@@ -79,10 +95,18 @@ public class MAVLinkClient {
 		}
 	}
 
+	/**
+	 * Set timeout value
+	 * @param timeout_ms
+	 */
 	public void setTimeOutValue(long timeout_ms) {
 		this.timeOut = timeout_ms;
 	}
 
+	/**
+	 * Get timeout value
+	 * @return
+	 */
 	public long getTimeOutValue() {
 		if (this.timeOut <= 0)
 			return 3000; // default value
@@ -90,10 +114,18 @@ public class MAVLinkClient {
 		return this.timeOut;
 	}
 
+	/**
+	 * Set number of timeout retries
+	 * @param timeout_retry
+	 */
 	public void setTimeOutRetry(int timeout_retry) {
 		this.timeOutRetry = timeout_retry;
 	}
 
+	/**
+	 * Get number of retries for timeout
+	 * @return timeOutRetry
+	 */
 	public int getTimeOutRetry() {
 		if (this.timeOutRetry <= 0)
 			return 3; // default value
@@ -111,10 +143,17 @@ public class MAVLinkClient {
 		}
 	}
 
+	/**
+	 * Set timeout
+	 */
 	public void setTimeOut() {
 		setTimeOut(this.timeOut, true);
 	}
 
+	/**
+	 * Set timeout to resetTimeOutCount
+	 * @param resetTimeOutCount
+	 */
 	public void setTimeOut(boolean resetTimeOutCount) {
 		setTimeOut(this.timeOut, resetTimeOutCount);
 	}
@@ -193,6 +232,10 @@ public class MAVLinkClient {
 		}
 	};
 
+	/**
+	 * Send mavlink packets
+	 * @param pack
+	 */
 	public void sendMavPacket(MAVLinkPacket pack) {
 		Message msg = Message.obtain(null, MAVLinkService.MSG_SEND_DATA);
 		Bundle data = new Bundle();
@@ -208,15 +251,24 @@ public class MAVLinkClient {
 
 	}
 
+	/**
+	 * Notify listeners when mavlink is connected
+	 */
 	private void onConnectedService() {
 		listener.notifyConnected();
 	}
 
+	/**
+	 * Notify listeners when mavlink is disconnected
+	 */
 	private void onDisconnectService() {
 		mIsBound = false;
 		listener.notifyDisconnected();
 	}
 
+	/**
+	 * Notify listener if mavlink is connected/disconnected
+	 */
 	public void queryConnectionState() {
 		if (mIsBound) {
 			listener.notifyConnected();
@@ -226,14 +278,30 @@ public class MAVLinkClient {
 
 	}
 
+	/**
+	 * Returns if mavlink is connected
+	 * @return mIsBound
+	 */
 	public boolean isConnected() {
 		return mIsBound;
 	}
-
+	
+	/**
+	 * Toggle connection state to properly disarm and land drone 
+	 */
 	public void toggleConnectionState() {
 		if (isConnected()) {
+			// if(drone.state.getMode().getName() != "ROTOR_CHASEME") {
+			// 	drone.state.changeFlightMode(ApmModes.ROTOR_LOITER);
+			// 	drone.landOrCrashTrying(drone.getFollowMe().getLocation().getLatitude(), drone.getFollowMe().getLocation().getLongitude());
+				Toast.makeText(parent, "Disconnecting", 1).show();
+				
+				Toast.makeText(parent, "Chase Me disengaged", 1).show();
+				Toast.makeText(parent, "		LandOrDieTrying initialized 	", 1).show();
+			//}
 			close();
 		} else {
+			Toast.makeText(parent, "Connecting", 1).show();
 			init();
 		}
 	}

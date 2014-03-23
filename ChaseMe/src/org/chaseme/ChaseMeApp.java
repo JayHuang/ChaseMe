@@ -11,6 +11,9 @@ import org.chaseme.service.MAVLinkClient.OnMavlinkClientListener;
 
 import com.MAVLink.Messages.MAVLinkMessage;
 
+/**
+ * Notifies drone of connect/disconnect events
+ */
 public class ChaseMeApp extends ErrorReportApp implements
 		OnMavlinkClientListener {
 	public Drone drone;
@@ -20,6 +23,10 @@ public class ChaseMeApp extends ErrorReportApp implements
 	private TTS tts;
 
 	@Override
+	/**
+	 * Create drone with MAVLinkClient
+	 * Create follow/recordMe objects on the drone
+	 */
 	public void onCreate() {
 		super.onCreate();
 
@@ -33,11 +40,18 @@ public class ChaseMeApp extends ErrorReportApp implements
 	}
 
 	@Override
+	/**
+	 * Notify MAVLink of message
+	 */
 	public void notifyReceivedData(MAVLinkMessage msg) {
 		mavLinkMsgHandler.receiveData(msg);
 	}
 
 	@Override
+	/**
+	 * Try to speak to MAVLink over timeout counter, otherwise notify of timeout
+	 * @param timeOutCount - integer for timeout counter
+	 */
 	public void notifyTimeOut(int timeOutCount) {
 		if (drone.waypointMananger.processTimeOut(timeOutCount)) {
 			tts.speak("Retrying - " + String.valueOf(timeOutCount));
@@ -47,11 +61,17 @@ public class ChaseMeApp extends ErrorReportApp implements
 	}
 
 	@Override
+	/**
+	 * Notify drone of connection event
+	 */
 	public void notifyConnected() {
 		drone.events.notifyDroneEvent(DroneEventsType.CONNECTED);
 	}
 
 	@Override
+	/**
+	 * Notify drone of disconnection event
+	 */
 	public void notifyDisconnected() {
 		drone.events.notifyDroneEvent(DroneEventsType.DISCONNECTED);
 	}

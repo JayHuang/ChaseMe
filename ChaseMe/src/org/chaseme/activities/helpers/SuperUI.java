@@ -16,10 +16,16 @@ public abstract class SuperUI extends SuperActivity implements OnDroneListener {
 	private InfoMenu infoMenu;
 	private GCSHeartbeat gcsHeartbeat;
 
+	/**
+	 * Call constructor for SuperActivity 
+	 */
 	public SuperUI() {
 		super();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperActivity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

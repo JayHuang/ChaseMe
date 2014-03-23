@@ -19,16 +19,25 @@ import android.view.MenuItem;
 import org.chaseme.utils.Constants;
 import org.chaseme.utils.Utils;
 
+/**
+ * Super activity for help activity
+ */
 public abstract class SuperActivity extends HelpActivity implements
 		OnAltitudeChangedListener {
 
 	public ChaseMeApp app;
 	public Drone drone;
 
+	/**
+	 * Call Help activity constructor
+	 */
 	public SuperActivity() {
 		super();
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +50,9 @@ public abstract class SuperActivity extends HelpActivity implements
 		setVolumeControlStream(AudioManager.STREAM_MUSIC);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onMenuItemSelected(int, android.view.MenuItem)
+	 */
 	@Override
 	public boolean onMenuItemSelected(int featureId, MenuItem item) {
 		switch (item.getItemId()) {
@@ -61,6 +73,9 @@ public abstract class SuperActivity extends HelpActivity implements
 		}
 	}
 
+    /**
+     * Toggle drone connection
+     */
     protected void toggleDroneConnection(){
         if (!drone.MavClient.isConnected()) {
             final String connectionType = PreferenceManager
@@ -77,6 +92,10 @@ public abstract class SuperActivity extends HelpActivity implements
         drone.MavClient.toggleConnectionState();
     }
 
+	/**
+	 * Set map type based on item id
+	 * @param itemId
+	 */
 	private void setMapTypeFromItemId(int itemId) {
 		final String mapType;
 		switch (itemId) {
@@ -100,11 +119,17 @@ public abstract class SuperActivity extends HelpActivity implements
 		//drone.notifyMapTypeChanged();
 	}
 
+	/**
+	 * Change default altitude
+	 */
 	public void changeDefaultAlt() {
 		AltitudeDialog dialog = new AltitudeDialog(this);
 		dialog.build(drone.mission.getDefaultAlt(), this);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.dialogs.AltitudeDialog.OnAltitudeChangedListener#onAltitudeChanged(org.chaseme.helpers.units.Altitude)
+	 */
 	@Override
 	public void onAltitudeChanged(Altitude newAltitude) {
 		drone.mission.setDefaultAlt(newAltitude);

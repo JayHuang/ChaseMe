@@ -12,16 +12,26 @@ public class ScreenOrientation {
 	public int screenRequestedOrientation;
 	private Activity activity;
 
+	/**
+	 * Setup orientation for activity
+	 * @param activity
+	 */
 	public ScreenOrientation(Activity activity) {
 		this.activity = activity;
 	}
 
+	/**
+	 * Lock orientation if requested
+	 */
 	public void requestLock() {
 		if (isPrefLockOrientationSet()) {
 			lockOrientation();
 		}
 	}
 
+	/**
+	 * Unlock screen orientation
+	 */
 	public void unlock() {
 		if (screenRequestedOrientation != ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED) {
 			screenRequestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED;
@@ -29,10 +39,16 @@ public class ScreenOrientation {
 		}
 	}
 
+	/**
+	 * Set requested screen orientation
+	 */
 	private void setOrientation() {
 		activity.setRequestedOrientation(screenRequestedOrientation);
 	}
 
+	/**
+	 * Lock screen orientation
+	 */
 	private void lockOrientation() {
 		int rotation = ((WindowManager) activity
 				.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
@@ -73,6 +89,10 @@ public class ScreenOrientation {
 		setOrientation();
 	}
 
+	/**
+	 * Check if lock screen orientation preference is set
+	 * @return boolean
+	 */
 	private boolean isPrefLockOrientationSet() {
 		return PreferenceManager.getDefaultSharedPreferences(
 				activity.getApplicationContext()).getBoolean(

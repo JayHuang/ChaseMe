@@ -31,14 +31,12 @@ public class RegionOfInterest extends SpatialCoordItem implements MarkerSource{
 
 	@Override
 	public List<msg_mission_item> packMissionItem() {
-		// TODO Auto-generated method stub
-		return super.packMissionItem();
+				return super.packMissionItem();
 	}
 
 	@Override
 	public void unpackMAVMessage(msg_mission_item mavMsg) {
-		// TODO Auto-generated method stub
-		super.unpackMAVMessage(mavMsg);
+				super.unpackMAVMessage(mavMsg);
 	}
 
 	@Override

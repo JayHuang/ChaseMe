@@ -4,7 +4,9 @@ import org.chaseme.file.IO.ExceptionWriter;
 
 import android.app.Application;
 
-
+/**
+ * Creates new exception handler to save stacktrace to SD card
+ */
 public class ErrorReportApp extends Application {
 	private Thread.UncaughtExceptionHandler exceptionHandler;
 
@@ -15,6 +17,9 @@ public class ErrorReportApp extends Application {
 		}
 	};
 
+	/**
+	 * Sets default uncaught exception handler
+	 */
 	public void onCreate() {
 		super.onCreate();
 		exceptionHandler = Thread.getDefaultUncaughtExceptionHandler();

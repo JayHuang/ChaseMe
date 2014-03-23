@@ -152,8 +152,7 @@ public class ChecklistFragment extends Fragment implements OnXmlParserError,
 
 	@Override
 	public void onError(XmlPullParser parser) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override

@@ -43,7 +43,6 @@ public class CheckListXmlParser extends ListXmlParser {
 			getListItemsFromResource(context, resourceId);
 			e.printStackTrace();
 		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -54,10 +53,8 @@ public class CheckListXmlParser extends ListXmlParser {
 		try {
 			getListItemsFromFile(ioFile);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -111,14 +108,10 @@ public class CheckListXmlParser extends ListXmlParser {
 
 	@Override
 	public void process_StartDocument(XmlPullParser xpp) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void process_EndDocument(XmlPullParser xpp) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -136,14 +129,10 @@ public class CheckListXmlParser extends ListXmlParser {
 
 	@Override
 	public void process_EndTag(XmlPullParser xpp) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void process_Text(XmlPullParser xpp) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public String getCheckListTitle() {

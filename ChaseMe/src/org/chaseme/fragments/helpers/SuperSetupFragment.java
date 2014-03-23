@@ -117,14 +117,12 @@ public abstract class SuperSetupFragment extends Fragment implements OnDroneList
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void onDroneEvent(DroneEventsType event, Drone drone) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	public void updateTitle(int id){

@@ -86,7 +86,6 @@ public class ListRow_Select extends ListRow implements OnItemSelectedListener{
 
 	@Override
 	public void onNothingSelected(AdapterView<?> arg0) {
-		// TODO Auto-generated method stub
 	}
 
 }

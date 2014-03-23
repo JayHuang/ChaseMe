@@ -123,8 +123,7 @@ public class MissionSurveyFragment extends MissionDetailFragment implements
 
 	@Override
 	public void onClick(View v) {
-		// TODO Auto-generated method stub
-	}
+			}
 
 	@Override
 	public void onDroneEvent(DroneEventsType event, Drone drone) {

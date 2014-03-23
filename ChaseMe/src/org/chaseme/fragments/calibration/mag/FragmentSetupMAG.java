@@ -15,19 +15,16 @@ public class FragmentSetupMAG extends SetupMainPanel {
 
 	@Override
 	public SetupSidePanel getSidePanel() {
-		// TODO Auto-generated method stub
-		return null;
+				return null;
 	}
 
 	@Override
 	public void setupLocalViews(View v) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 	@Override
 	public void doCalibrationStep(int step) {
-		// TODO Auto-generated method stub
-		
+				
 	}
 }

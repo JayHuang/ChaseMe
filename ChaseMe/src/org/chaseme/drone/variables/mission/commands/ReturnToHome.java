@@ -34,13 +34,10 @@ public class ReturnToHome extends MissionCMD{
 
 	@Override
 	public List<msg_mission_item> packMissionItem() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void unpackMAVMessage(msg_mission_item mavMessageItem) {
-		// TODO Auto-generated method stub
-		
 	}
 }

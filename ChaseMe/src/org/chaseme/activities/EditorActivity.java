@@ -35,6 +35,9 @@ import android.widget.TextView;
 import org.chaseme.R;
 import com.google.android.gms.maps.model.LatLng;
 
+/**
+ * Editor UI Activity
+ */
 public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		OnEditorToolSelected, OnWayPointTypeChangeListener,
 		OnEditorInteraction, Callback {
@@ -50,6 +53,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 
 	private ActionMode contextualActionBar;
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperUI#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,12 +83,18 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		gestureMapFragment.setOnPathFinishedListener(this);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onWindowFocusChanged(boolean)
+	 */
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {
 		super.onWindowFocusChanged(hasFocus);
 		updateMapPadding();
 	}
 
+	/**
+	 * Updates padding for Map fragment on UI
+	 */
 	private void updateMapPadding() {
 		int topPadding = infoView.getBottom();
 		int rightPadding = 0,bottomPadding = 0;
@@ -93,11 +105,17 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		planningMapFragment.mMap.setPadding(rightPadding, topPadding, 0, bottomPadding);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperUI#onStart()
+	 */
 	@Override
 	protected void onStart() {
 		super.onStart();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperUI#onStop()
+	 */
 	@Override
 	protected void onStop() {
 		super.onStop();
@@ -105,12 +123,18 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		drone.events.notifyDroneEvent(DroneEventsType.MISSION_UPDATE);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.support.v4.app.FragmentActivity#onBackPressed()
+	 */
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
 		planningMapFragment.saveCameraPosition();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperUI#onDroneEvent(org.chaseme.drone.DroneInterfaces.DroneEventsType, org.chaseme.drone.Drone)
+	 */
 	@Override
 	public void onDroneEvent(DroneEventsType event, Drone drone) {
 		super.onDroneEvent(event,drone);
@@ -128,6 +152,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperUI#onOptionsItemSelected(android.view.MenuItem)
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -139,6 +166,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		return super.onOptionsItemSelected(item);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.OnEditorInteraction#onMapClick(com.google.android.gms.maps.model.LatLng)
+	 */
 	@Override
 	public void onMapClick(LatLng point) {
         //If an mission item is selected, unselect it.
@@ -161,10 +191,18 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		}
 	}
 
+	
+	/**
+	 * Get tool from editor tools fragment
+	 * @return tool
+	 */
 	public EditorTools getTool() {
 		return editorToolsFragment.getTool();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.EditorToolsFragment.OnEditorToolSelected#editorToolChanged(org.chaseme.fragments.EditorToolsFragment.EditorTools)
+	 */
 	@Override
 	public void editorToolChanged(EditorTools tools) {
 		removeItemDetail();
@@ -183,7 +221,12 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 			break;
 		}
 	}
-
+	
+	
+	/**
+	 * Sets up item detail for the item
+	 * @param item - MissionItem to show detail on
+	 */
 	private void showItemDetail(MissionItem item) {
 		if (itemDetailFragment == null) {
 			addItemDetail(item);
@@ -192,18 +235,30 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		}
 	}
 
+	
+	/**
+	 * Add item detail for item
+	 * @param item - MissionItem to add
+	 */
 	private void addItemDetail(MissionItem item) {
 		itemDetailFragment = item.getDetailFragment();
 		fragmentManager.beginTransaction()
 				.add(R.id.containerItemDetail, itemDetailFragment).commit();
 	}
 
+	/**
+	 * Switch the item detail for item
+	 * @param item MissionItem
+	 */
 	private void switchItemDetail(MissionItem item) {
 		itemDetailFragment = item.getDetailFragment();
 		fragmentManager.beginTransaction()
 				.replace(R.id.containerItemDetail, itemDetailFragment).commit();
 	}
 
+	/**
+	 * Remove item detail
+	 */
 	private void removeItemDetail() {
 		if (itemDetailFragment != null) {
 			fragmentManager.beginTransaction().remove(itemDetailFragment)
@@ -212,6 +267,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.GestureMapFragment.OnPathFinishedListener#onPathFinished(java.util.List)
+	 */
 	@Override
 	public void onPathFinished(List<Point> path) {
 		List<LatLng> points = MapProjection.projectPathIntoMap(path,
@@ -229,6 +287,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		editorToolsFragment.setTool(EditorTools.NONE);
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.mission.MissionDetailFragment.OnWayPointTypeChangeListener#onWaypointTypeChanged(org.chaseme.drone.variables.mission.MissionItem, org.chaseme.drone.variables.mission.MissionItem)
+	 */
 	@Override
 	public void onWaypointTypeChanged(MissionItem newItem, MissionItem oldItem) {
 		mission.replace(oldItem, newItem);
@@ -238,6 +299,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 	private static final int MENU_DELETE = 1;
 	private static final int MENU_REVERSE = 2;
 
+	/* (non-Javadoc)
+	 * @see android.view.ActionMode.Callback#onActionItemClicked(android.view.ActionMode, android.view.MenuItem)
+	 */
 	@Override
 	public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 		switch(item.getItemId()){
@@ -255,6 +319,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see android.view.ActionMode.Callback#onCreateActionMode(android.view.ActionMode, android.view.Menu)
+	 */
 	@Override
 	public boolean onCreateActionMode(ActionMode arg0, Menu menu) {
 		menu.add(0, MENU_DELETE, 0, "Delete");
@@ -263,6 +330,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see android.view.ActionMode.Callback#onDestroyActionMode(android.view.ActionMode)
+	 */
 	@Override
 	public void onDestroyActionMode(ActionMode arg0) {
 		missionListFragment.updateChoiceMode(ListView.CHOICE_MODE_SINGLE);
@@ -272,11 +342,17 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		editorToolsFragment.getView().setVisibility(View.VISIBLE);
 	}
 
+	/* (non-Javadoc)
+	 * @see android.view.ActionMode.Callback#onPrepareActionMode(android.view.ActionMode, android.view.Menu)
+	 */
 	@Override
 	public boolean onPrepareActionMode(ActionMode arg0, Menu arg1) {
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.OnEditorInteraction#onItemLongClick(org.chaseme.drone.variables.mission.MissionItem)
+	 */
 	@Override
 	public boolean onItemLongClick(MissionItem item) {
 		if (contextualActionBar != null) {
@@ -299,6 +375,9 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.OnEditorInteraction#onItemClick(org.chaseme.drone.variables.mission.MissionItem)
+	 */
 	@Override
 	public void onItemClick(MissionItem item) {
 		switch (editorToolsFragment.getTool()) {
@@ -330,6 +409,10 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		notifySelectionChanged();
 	}
 
+	
+	/**
+	 * Update based on change in selection
+	 */
 	private void notifySelectionChanged() {
         List<MissionItem> selectedItems = mission.getSelected();
         missionListFragment.updateMissionItemSelection(selectedItems);
@@ -342,11 +425,17 @@ public class EditorActivity extends SuperUI implements OnPathFinishedListener,
 		planningMapFragment.update();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.OnEditorInteraction#onListVisibilityChanged()
+	 */
 	@Override
 	public void onListVisibilityChanged() {
 		updateMapPadding();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.HelpActivity#getHelpItems()
+	 */
 	@Override
 	public CharSequence[][] getHelpItems() {
 		return new CharSequence[][] { {}, {} };

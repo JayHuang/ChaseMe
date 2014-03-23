@@ -73,6 +73,10 @@ public class Drone {
 		profile.load();
 	}
 
+	public FollowMe getFollowMe() {
+		return fm;
+	}
+
 	public void setAltitudeGroundAndAirSpeeds(double altitude,
 			double groundSpeed, double airSpeed, double climb) {
 		this.altitude.setAltitude(altitude);
@@ -110,17 +114,9 @@ public class Drone {
 		
 		Location location = fm.getLocation();
 		
-		//TODO get GPS latitude with google api
 		item.x      = (float) location.getLatitude();
-		//TODO get GPS longitude with google api
 		item.y		= (float) location.getLongitude();
 		item.z		= altitude;
-		//TODO get GPS latitude with google api
-		item.x      = (float) location.getLatitude();
-		//TODO get GPS longitude with google api
-		item.y		= (float) location.getLongitude();
-		item.z		= altitude;
-		//TODO send packet with above info
 		MavClient.sendMavPacket(item.pack());
 	}
 	/**

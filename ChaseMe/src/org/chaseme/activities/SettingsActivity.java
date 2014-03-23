@@ -13,6 +13,10 @@ import org.chaseme.R;
  */
 public class SettingsActivity extends SuperUI {
 
+	
+    /* (non-Javadoc)
+     * @see org.chaseme.activities.helpers.SuperUI#onCreate(android.os.Bundle)
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
@@ -25,6 +29,9 @@ public class SettingsActivity extends SuperUI {
         }
     }
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.HelpActivity#getHelpItems()
+	 */
 	@Override
 	public CharSequence[][] getHelpItems() {
 		return new CharSequence[][] { {}, {} };

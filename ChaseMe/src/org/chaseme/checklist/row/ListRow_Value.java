@@ -100,7 +100,6 @@ public class ListRow_Value extends ListRow implements OnFocusChangeListener {
 			try {
 				a = Float.parseFloat(((EditText) v).getText().toString());
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

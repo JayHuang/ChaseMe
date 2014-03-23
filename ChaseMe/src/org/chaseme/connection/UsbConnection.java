@@ -99,7 +99,7 @@ public class UsbConnection extends MAVLinkConnection {
 	                try {
 	                    sDriver.close();
 	                } catch (IOException e2) {
-	                    // Ignore.
+	                    // do nothing
 	                }
 	                sDriver = null;
 	                return;

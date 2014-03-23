@@ -36,6 +36,9 @@ import android.view.View;
 import org.chaseme.R;
 import com.google.android.gms.maps.model.LatLng;
 
+/**
+ * Flight Activity UI
+ */
 public class FlightActivity extends SuperUI implements
 		OnMapInteractionListener, OnMissionControlInteraction, OnDroneListener{
 
@@ -45,6 +48,9 @@ public class FlightActivity extends SuperUI implements
 	private Fragment modeInfoPanel;
 	private Fragment mapFragment;
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperUI#onCreate(android.os.Bundle)
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,53 +87,69 @@ public class FlightActivity extends SuperUI implements
         }
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperUI#onStart()
+	 */
 	@Override
 	protected void onStart() {
 		super.onStart();
 		onModeChanged(drone);	// Update the mode detail panel;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.OnMapInteractionListener#onAddPoint(com.google.android.gms.maps.model.LatLng)
+	 */
 	@Override
 	public void onAddPoint(LatLng point) {
-		// TODO Auto-generated method stub
-
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.OnMapInteractionListener#onMoveHome(com.google.android.gms.maps.model.LatLng)
+	 */
 	@Override
 	public void onMoveHome(LatLng coord) {
-		// TODO Auto-generated method stub
-
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.OnMapInteractionListener#onMoveWaypoint(org.chaseme.drone.variables.mission.waypoints.SpatialCoordItem, com.google.android.gms.maps.model.LatLng)
+	 */
 	@Override
 	public void onMoveWaypoint(SpatialCoordItem waypoint, LatLng latLng) {
-		// TODO Auto-generated method stub
-
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.OnMapInteractionListener#onMovePolygonPoint(org.chaseme.polygon.PolygonPoint, com.google.android.gms.maps.model.LatLng)
+	 */
 	@Override
 	public void onMovePolygonPoint(PolygonPoint source, LatLng newCoord) {
-		// TODO Auto-generated method stub
-
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.OnMapInteractionListener#onMapClick(com.google.android.gms.maps.model.LatLng)
+	 */
 	@Override
 	public void onMapClick(LatLng point) {
-		// TODO Auto-generated method stub
-
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.OnMapInteractionListener#onMarkerClick(org.chaseme.drone.variables.mission.MissionItem)
+	 */
 	@Override
 	public boolean onMarkerClick(MissionItem wp) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.FlightActionsFragment.OnMissionControlInteraction#onJoystickSelected()
+	 */
 	@Override
 	public void onJoystickSelected() {
 		toggleRCFragment();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.FlightActionsFragment.OnMissionControlInteraction#onPlanningSelected()
+	 */
 	@Override
 	public void onPlanningSelected() {
 		((DroneMap) mapFragment ).saveCameraPosition();
@@ -136,6 +158,9 @@ public class FlightActivity extends SuperUI implements
 		startActivity(navigationIntent);
 	}
 
+	/**
+	 * Toggle the RC fragment
+	 */
 	private void toggleRCFragment() {
 		if (rcFragment == null) {
 			rcFragment = new RCFragment();
@@ -147,12 +172,16 @@ public class FlightActivity extends SuperUI implements
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.fragments.helpers.OnMapInteractionListener#onMovingWaypoint(org.chaseme.drone.variables.mission.waypoints.SpatialCoordItem, com.google.android.gms.maps.model.LatLng)
+	 */
 	@Override
 	public void onMovingWaypoint(SpatialCoordItem source, LatLng latLng) {
-		// TODO Auto-generated method stub
-
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.SuperUI#onDroneEvent(org.chaseme.drone.DroneInterfaces.DroneEventsType, org.chaseme.drone.Drone)
+	 */
 	@Override
 	public void onDroneEvent(DroneEventsType event, Drone drone) {
 		super.onDroneEvent(event,drone);
@@ -169,6 +198,10 @@ public class FlightActivity extends SuperUI implements
 
 	}
 
+	/**
+	 * Update failsafe text visibility of drone on change
+	 * @param drone
+	 */
 	public void onFailsafeChanged(Drone drone) {
 		if (drone.state.isFailsafe()) {
 			failsafeTextView.setVisibility(View.VISIBLE);
@@ -177,6 +210,10 @@ public class FlightActivity extends SuperUI implements
 		}
 	}
 
+	/**
+	 * Change info mode panel when drone mode changes
+	 * @param drone
+	 */
 	public void onModeChanged(Drone drone) {
 		switch (drone.state.getMode()) {
 		case ROTOR_RTL:
@@ -212,6 +249,8 @@ public class FlightActivity extends SuperUI implements
 		case ROTOR_TOY:
 			modeInfoPanel = new ModeDriftFragment();
 			break;
+		case ROTOR_CHASEME:
+			break;
 		default:
 			modeInfoPanel = new ModeDisconnectedFragment();
 			break;
@@ -223,6 +262,9 @@ public class FlightActivity extends SuperUI implements
 				.replace(R.id.modeInfoPanel, modeInfoPanel).commit();
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.HelpActivity#getHelpItems()
+	 */
 	@Override
 	public CharSequence[][] getHelpItems() {
 		return new CharSequence[][] {

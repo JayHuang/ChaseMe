@@ -24,8 +24,7 @@ public class SetupRadioFragment extends SuperSetupFragment {
 	
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
+				super.onActivityCreated(savedInstanceState);
 		this.drone = parentActivity.drone;
 	}
 
@@ -54,8 +53,7 @@ public class SetupRadioFragment extends SuperSetupFragment {
 
 	@Override
 	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
+				super.onPause();
 	}
 
 	@Override

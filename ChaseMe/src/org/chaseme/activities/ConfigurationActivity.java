@@ -21,6 +21,9 @@ import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 
+/**
+ * Configuration activity
+ */
 public class ConfigurationActivity extends SuperUI {
 
 	@Override
@@ -72,12 +75,16 @@ public class ConfigurationActivity extends SuperUI {
 		 * @since 1.2.0
 		 */
 		private final Context mContext;
-
+		
+		
 		public ConfigurationPagerAdapter(Context context, FragmentManager fm) {
 			super(fm);
 			mContext = context;
 		}
 
+		/* (non-Javadoc)
+		 * @see android.support.v4.app.FragmentPagerAdapter#getItem(int)
+		 */
 		@Override
 		public Fragment getItem(int position) {
 			switch (position) {
@@ -96,11 +103,17 @@ public class ConfigurationActivity extends SuperUI {
 			}
 		}
 
+		/* (non-Javadoc)
+		 * @see android.support.v4.view.PagerAdapter#getCount()
+		 */
 		@Override
 		public int getCount() {
 			return 5;
 		}
 
+		/* (non-Javadoc)
+		 * @see android.support.v4.view.PagerAdapter#getPageTitle(int)
+		 */
 		@Override
 		public CharSequence getPageTitle(int position) {
 			switch (position) {
@@ -120,6 +133,9 @@ public class ConfigurationActivity extends SuperUI {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see org.chaseme.activities.helpers.HelpActivity#getHelpItems()
+	 */
 	@Override
 	public CharSequence[][] getHelpItems() {
 		return new CharSequence[][] { {}, {} };
