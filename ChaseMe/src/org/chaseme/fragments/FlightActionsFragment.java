@@ -127,7 +127,7 @@ public class FlightActionsFragment extends Fragment implements	OnClickListener {
 				
 			// } else {
 			// 	drone.state.changeFlightMode(ApmModes.ROTOR_LOITER);
-			// 	drone.landOrCrashTrying(drone.getFollowMe().getLocation().getLatitude(), drone.getFollowMe().getLocation().getLongitude());
+			// 	drone.land(drone.getFollowMe().getLocation().getLatitude(), drone.getFollowMe().getLocation().getLongitude());
 			// }
 			if(toggle == false){
 				toggle = true;
@@ -138,7 +138,7 @@ public class FlightActionsFragment extends Fragment implements	OnClickListener {
 				toggle = false;
 				followBtn.setText("Chase Me!");
 				Toast.makeText(getActivity(), "Chase Me disengaged", 1).show();
-				Toast.makeText(getActivity(), "		LandOrDieTrying initialized		", 1).show();
+				Toast.makeText(getActivity(), "Land initialized", 1).show();
 			}
 			
 			break;

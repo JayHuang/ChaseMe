@@ -149,7 +149,7 @@ public class Drone {
 	 * @param lat The latitude of the phone's location
 	 * @param lon The longitude of the phone's location
 	 */
-	public void landOrCrashTrying(double lat, double lon){
+	public void land(double lat, double lon){
 		//Set the mavlink command to land.
 		item.command = MAV_CMD.MAV_CMD_NAV_LAND;
 		item.param4 = 0;

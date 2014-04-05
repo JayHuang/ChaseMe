@@ -45,7 +45,7 @@ public class ChaseMeApp extends ErrorReportApp implements
 	public void notifyReceivedData(MAVLinkMessage msg) {
 		mavLinkMsgHandler.receiveData(msg);
 	}
-
+ 
 	@Override
 	/**
 	 * Try to speak to MAVLink over timeout counter, otherwise notify of timeout

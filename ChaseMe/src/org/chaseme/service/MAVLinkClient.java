@@ -293,11 +293,11 @@ public class MAVLinkClient {
 		if (isConnected()) {
 			// if(drone.state.getMode().getName() != "ROTOR_CHASEME") {
 			// 	drone.state.changeFlightMode(ApmModes.ROTOR_LOITER);
-			// 	drone.landOrCrashTrying(drone.getFollowMe().getLocation().getLatitude(), drone.getFollowMe().getLocation().getLongitude());
+			// 	drone.land(drone.getFollowMe().getLocation().getLatitude(), drone.getFollowMe().getLocation().getLongitude());
 				Toast.makeText(parent, "Disconnecting", 1).show();
 				
 				Toast.makeText(parent, "Chase Me disengaged", 1).show();
-				Toast.makeText(parent, "		LandOrDieTrying initialized 	", 1).show();
+				Toast.makeText(parent, "Land initialized", 1).show();
 			//}
 			close();
 		} else {
